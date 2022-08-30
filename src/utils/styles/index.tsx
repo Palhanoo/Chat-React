@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { PageProps } from './styleTipes';
 
+export const SIDEBAR_WIDTH = 400;
 export const InputField = styled.input`
   font-family: 'Inter';
   outline: none;
@@ -67,11 +68,25 @@ export const ConversationSideBarStyle = styled.aside`
   top: 0;
   left: 0;
   height: 100%;
-  width: 350px;
+  width: ${SIDEBAR_WIDTH}px;
   background-color: #1f1f1f;
+  border-right: 1px solid #37372e;
+
+  & header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px;
+    background-color: #151515;
+    height: 100px;
+    border-bottom: 1px solid #141414;
+    & h1 {
+      font-weight: 500;
+    }
+  }
 `;
 
 export const ConversationChannelPageStyle = styled.div`
   height: 100%;
-  margin-left: 350px;
+  margin-left: ${SIDEBAR_WIDTH}px;
 `
