@@ -1,9 +1,9 @@
-import { RegisterForm } from '../components/forms/RegisterForm';
-import { Page } from '../utils/styles';
+import { RegisterForm } from "../components/forms/RegisterForm";
+import { Page } from "../utils/styles";
 
 export const RegisterPage = () => {
   return (
-    <Page>
+    <Page display="flex" justifyContent="center" alignItems="center">
       <RegisterForm />
     </Page>
   );
