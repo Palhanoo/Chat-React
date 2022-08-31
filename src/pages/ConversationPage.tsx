@@ -3,6 +3,7 @@ import { Outlet, useParams } from "react-router-dom";
 import { ConversationPanel } from "../components/conversations/ConversationPanel";
 import { ConversationSidebar } from "../components/conversations/ConversationSidebar";
 import { Page } from "../utils/styles";
+import mockConversationClass from '../__mocks__/conversations'
 
 export const ConversationPage = () => {
 
@@ -10,7 +11,7 @@ export const ConversationPage = () => {
 
   return (
     <Page>
-      <ConversationSidebar />
+      <ConversationSidebar conversations={mockConversationClass} />
       {!id && <ConversationPanel />}
       <Outlet />
     </Page>
