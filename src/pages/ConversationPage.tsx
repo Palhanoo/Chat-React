@@ -11,7 +11,7 @@ export const ConversationPage = () => {
 
   return (
     <Page>
-      <ConversationSidebar conversations={mockConversationClass} />
+      <ConversationSidebar conversations={[]} />
       {!id && <ConversationPanel />}
       <Outlet />
     </Page>

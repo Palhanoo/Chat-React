@@ -24,6 +24,7 @@ export const RegisterForm = () => {
     console.log(data);
     try {
       await postRegisterUser(data);
+      //levar pra conversations
     } catch (err) {
       console.log(err);
     }
