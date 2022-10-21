@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState, useContext } from "react";
 import {
   ConversationSidebarContainer,
   ConversationSidebarHeader,
@@ -10,6 +10,7 @@ import { ConversationType } from "../../utils/types";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { CreateConversationModal } from "../../modals/CreateConversationModal";
+import { AuthContext } from "../../utils/context/AuthContext";
 
 type Props = {
   conversations: ConversationType[];
@@ -17,7 +18,15 @@ type Props = {
 
 export const ConversationSidebar: FC<Props> = ({ conversations }) => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
+
+  const getDisplayUser = (conversation: ConversationType) => {
+    const userId = user?.id;
+    return conversation.creator.id === userId
+      ? conversation.recipient
+      : conversation.creator;
+  };
   return (
     <>
       {showModal && <CreateConversationModal setShowModal={setShowModal} />}
@@ -40,10 +49,12 @@ export const ConversationSidebar: FC<Props> = ({ conversations }) => {
               <div className={styles.conversationAvatar}></div>
               <div>
                 <span className={styles.conversationName}>
-                  {conversation.name}
+                  {`${getDisplayUser(conversation).firstName} ${
+                    getDisplayUser(conversation).lastName
+                  }`}
                 </span>
                 <span className={styles.conversationLastMessage}>
-                  {conversation.lastMessage}
+                  Sample Text
                 </span>
               </div>
             </ConversationSidebarItem>

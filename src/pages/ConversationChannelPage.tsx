@@ -5,7 +5,8 @@ import { ConversationChannelPageStyle } from "../utils/styles";
 
 export const ConversationChannelPage = () => {
   const { user } = useContext(AuthContext);
-  console.log(useParams());
+  const { id } = useParams();
+  console.log(id);
   return (
     <ConversationChannelPageStyle>
       {user && user.email}

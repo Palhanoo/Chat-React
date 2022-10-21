@@ -106,7 +106,7 @@ export const ConversationChannelPageStyle = styled.div`
 `;
 
 export const ConversationSidebarContainer = styled.div`
-  padding-top: 100px;
+  margin-top: 100px;
 `;
 
 export const ConversationSidebarItem = styled.div`
