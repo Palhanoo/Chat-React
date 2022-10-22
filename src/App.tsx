@@ -31,8 +31,4 @@ function App() {
   );
 }
 
-type Props = {
-  children: React.ReactNode;
-};
-
 export default App;

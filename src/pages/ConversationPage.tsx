@@ -15,7 +15,7 @@ export const ConversationPage = () => {
       .then(({ data }) => setConversations(data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(conversations);
+  // console.log(conversations);
 
   return (
     <Page>
