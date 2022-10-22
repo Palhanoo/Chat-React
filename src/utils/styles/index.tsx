@@ -211,7 +211,7 @@ export const MessagePanelBody = styled.div`
 export const MessageContainerStyle = styled.div`
   height: 100%;
   box-sizing: border-box;
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
   display: flex;
   flex-direction: column-reverse;
   overflow-y: scroll;
