@@ -41,7 +41,9 @@ export const FormattedMessage: FC<FormattedMessageProps> = ({
             {formatRelative(new Date(message.createdAt), new Date())}
           </span>
         </MessageItemHeader>
-        <MessageItemContent>{message.content}</MessageItemContent>
+        <MessageItemContent padding="8px 0 0 0">
+          {message.content}
+        </MessageItemContent>
       </MessageItemDetails>
     </MessageItemContainer>
   );
@@ -52,13 +54,13 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
 
   const formatMessages = () => {
     return messages.map((m, index, arr) => {
+      const nextIndex = index + 1;
       const currentMessage = arr[index];
-      const nextMessage = arr[index + 1];
-      if (arr.length === index + 1) {
+      const nextMessage = arr[nextIndex];
+      if (arr.length === nextIndex) {
         return <FormattedMessage user={user} message={m} />;
       }
       if (currentMessage.author.id === nextMessage.author.id) {
-        console.log(m);
         return (
           <MessageItemContainer>
             <MessageItemContent padding="0 0 0 70px">

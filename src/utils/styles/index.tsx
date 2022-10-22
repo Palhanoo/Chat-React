@@ -178,9 +178,24 @@ export const TextField = styled.textarea`
   }
 `;
 
+export const MessagePanelHeaderStyle = styled.header`
+  background-color: #151515;
+  border-bottom: 1px solid #545454;
+  border-left: 1px solid #5454543d;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+`;
+
 export const MessagePanelStyle = styled.div`
   background: inherit;
-  height: 100%;
+  height: calc(100% - 100px);
   box-sizing: border-box;
   position: relative;
 `;
@@ -239,10 +254,13 @@ export const MessageItemAvatar = styled.div`
   border-radius: 50%;
 `;
 
-export const MessageItemDetails = styled.div``;
+export const MessageItemDetails = styled.div`
+  flex-grow: 1;
+`;
 
 export const MessageItemHeader = styled.div`
   display: flex;
+  align-items: center;
   gap: 12px;
   .time {
     color: #6d6d6d;
@@ -258,19 +276,4 @@ export const MessageItemHeader = styled.div`
 
 export const MessageItemContent = styled.div<MessageItemContentProps>`
   padding: ${({ padding }) => padding};
-`;
-
-export const MessagePanelHeaderStyle = styled.header`
-  background-color: #151515;
-  border-bottom: 1px solid #545454;
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 32px;
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
 `;
