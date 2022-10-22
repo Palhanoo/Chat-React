@@ -21,7 +21,8 @@ export type ConversationType = {
   id: number;
   creator: User;
   recipient: User;
-  createdAt: Date;
+  createdAt: string;
+  message: MessageType[];
 };
 
 export type MessageType = {

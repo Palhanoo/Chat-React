@@ -1,15 +1,23 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getConversations } from "../utils/api";
 import { ConversationType } from "../utils/types";
 
 // Define a type for the slice state
 interface ConversationsState {
-  conversations: ConversationType[];
+  conversations: Map<string, ConversationType>;
 }
 
 // Define the initial state using that type
 const initialState: ConversationsState = {
-  conversations: [],
+  conversations: new Map(),
 };
+
+export const fetchConversationsThunk = createAsyncThunk(
+  "coversations/fetch",
+  async () => {
+    return getConversations();
+  }
+);
 
 export const conversationsSlice = createSlice({
   name: "conversations",
@@ -18,8 +26,18 @@ export const conversationsSlice = createSlice({
   reducers: {
     addConversation: (state, action: PayloadAction<ConversationType>) => {
       console.log("addConversation");
-      state.conversations.push(action.payload);
+      // state.conversations.push(action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchConversationsThunk.fulfilled, (state, action) => {
+      action.payload.data.forEach((conversation) => {
+        console.log(conversation);
+        state.conversations.set(conversation.id.toString(), conversation);
+      });
+      console.log(state.conversations);
+      // state.conversations = action.payload.data;
+    });
   },
 });
 

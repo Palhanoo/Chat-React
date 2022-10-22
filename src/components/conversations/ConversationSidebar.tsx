@@ -1,4 +1,5 @@
 import { FC, useState, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   ConversationSidebarContainer,
   ConversationSidebarHeader,
@@ -11,15 +12,22 @@ import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { CreateConversationModal } from "../../modals/CreateConversationModal";
 import { AuthContext } from "../../utils/context/AuthContext";
+import { RootState } from "../../store";
 
 type Props = {
   conversations: ConversationType[];
 };
 
-export const ConversationSidebar: FC<Props> = ({ conversations }) => {
+export const ConversationSidebar: FC<Props> = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { user } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
+
+  const conversations = useSelector(
+    (state: RootState) => state.conversation.conversations
+  );
 
   const getDisplayUser = (conversation: ConversationType) => {
     const userId = user?.id;
@@ -42,24 +50,25 @@ export const ConversationSidebar: FC<Props> = ({ conversations }) => {
           </div>
         </ConversationSidebarHeader>
         <ConversationSidebarContainer>
-          {conversations.map((conversation) => (
-            <ConversationSidebarItem
-              key={conversation.id}
-              onClick={() => navigate(`/conversations/${conversation.id}`)}
-            >
-              <div className={styles.conversationAvatar}></div>
-              <div>
-                <span className={styles.conversationName}>
-                  {`${getDisplayUser(conversation).firstName} ${
-                    getDisplayUser(conversation).lastName
-                  }`}
-                </span>
-                <span className={styles.conversationLastMessage}>
-                  Sample Text
-                </span>
-              </div>
-            </ConversationSidebarItem>
-          ))}
+          {Array.from(conversations, ([_, conversation]) => conversation).map(
+            (conversation) => (
+              <ConversationSidebarItem
+                key={conversation.id}
+                onClick={() => navigate(`/conversations/${conversation.id}`)}
+              >
+                <div className={styles.conversationAvatar}></div>
+                <div>
+                  <span className={styles.conversationName}>
+                    {`${getDisplayUser(conversation).firstName} 
+                    ${getDisplayUser(conversation).lastName}`}
+                  </span>
+                  <span className={styles.conversationLastMessage}>
+                    Sample Text
+                  </span>
+                </div>
+              </ConversationSidebarItem>
+            )
+          )}
         </ConversationSidebarContainer>
       </ConversationSideBarStyle>
     </>
