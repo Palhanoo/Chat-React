@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
 import { ConversationPanel } from "../components/conversations/ConversationPanel";
 import { ConversationSidebar } from "../components/conversations/ConversationSidebar";
-import { AppDispatch } from "../store";
+import { AppDispatch, RootState } from "../store";
 import { fetchConversationsThunk } from "../store/conversationSlice";
 import { Page } from "../utils/styles";
 import { ConversationType } from "../utils/types";
@@ -14,11 +14,13 @@ export const ConversationPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const conversationsState = useSelector(
+    (state: RootState) => state.conversation.conversations
+  );
+
   useEffect(() => {
-    dispatch(fetchConversationsThunk())
-      .unwrap()
-      .then(({ data }) => setConversations(data))
-      .catch((err) => console.log(err));
+    console.log(conversationsState.find((c) => c.id === 9));
+    dispatch(fetchConversationsThunk());
   }, []);
 
   return (
