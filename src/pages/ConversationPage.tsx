@@ -19,7 +19,7 @@ export const ConversationPage = () => {
   );
 
   useEffect(() => {
-    console.log(conversationsState.find((c) => c.id === 9));
+    // console.log(conversationsState.find((c) => c.id === 9));
     dispatch(fetchConversationsThunk());
   }, []);
 
