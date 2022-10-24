@@ -227,7 +227,7 @@ export const MessageInputContainer = styled.div`
   background-color: #101010;
   border-radius: 5px;
   width: 100%;
-  padding: 32px 16px;
+  padding: 16px 8px;
 `;
 
 export const MessageInput = styled.input`
@@ -240,6 +240,7 @@ export const MessageInput = styled.input`
   padding: 0;
   margin: 4px 0;
   resize: none;
+  color: white;
 `;
 
 export const MessageItemContainer = styled.div`
@@ -247,6 +248,7 @@ export const MessageItemContainer = styled.div`
   gap: 20px;
   align-items: center;
   padding: 5px 0;
+  word-break: break-all;
 `;
 
 export const MessageItemAvatar = styled.div`
