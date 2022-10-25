@@ -26,6 +26,9 @@ export const ConversationChannelPage = () => {
   }, [id]);
 
   useEffect(() => {
+    socket.emit("onClientConnect", {
+      conversationId: parseInt(id!),
+    });
     socket.on("connected", () => console.log("connected"));
     socket.on("onMessage", (payload: MessageEventPayload) => {
       const { conversation, ...message } = payload;
@@ -37,11 +40,17 @@ export const ConversationChannelPage = () => {
       socket.off("connected");
       socket.off("onMessage");
     };
-  }, []);
+  }, [id]);
+
+  const sendTypingStatus = () => {
+    console.log("typing");
+
+    socket.emit("onUserTyping", { conversationId: id });
+  };
 
   return (
     <ConversationChannelPageStyle>
-      <MessagePanel></MessagePanel>
+      <MessagePanel sendTypingStatus={sendTypingStatus}></MessagePanel>
     </ConversationChannelPageStyle>
   );
 };

@@ -7,31 +7,56 @@ import {
 } from "../../utils/styles";
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
-import { addConversation } from "../../store/conversationSlice";
+import {
+  addConversation,
+  createConversationThunk,
+} from "../../store/conversationSlice";
+import { useForm } from "react-hook-form";
+import { CreateConversationParams } from "../../utils/types";
+import { AppDispatch } from "../../store";
+import React, { Dispatch, FC } from "react";
 
-export const CreateConversationForm = () => {
-  const dispatch = useDispatch();
+type Props = {
+  setShowModal: Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const CreateConversationForm: FC<Props> = ({ setShowModal }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateConversationParams>({});
+
+  const onSubmit = async (data: CreateConversationParams) => {
+    console.log(data);
+    dispatch(createConversationThunk(data))
+      .then(() => setShowModal(false))
+      .catch(() => console.log("ok"));
+  };
+
   return (
-    <form className={styles.createConversationForm}>
+    <form
+      className={styles.createConversationForm}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <section>
         <InputContainer backgroundColor="#161616">
           <InputLabel>Recipient</InputLabel>
-          <InputField />
+          <InputField
+            {...register("email", { required: "Email is Required" })}
+          />
         </InputContainer>
       </section>
       <section className={styles.message}>
         <InputContainer backgroundColor="#161616">
           <InputLabel>Message (optional)</InputLabel>
-          <TextField />
+          <TextField
+            {...register("message", { required: "Message is Required" })}
+          />
         </InputContainer>
       </section>
-      <Button
-        onClick={(e) => {
-          e.preventDefault();
-        }}
-      >
-        Create Conversation
-      </Button>
+      <Button>Create Conversation</Button>
     </form>
   );
 };

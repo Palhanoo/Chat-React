@@ -64,7 +64,7 @@ export const ConversationSidebar: FC<Props> = () => {
                 <span className={styles.conversationLastMessage}>
                   {conversation.lastMessageSent
                     ? conversation.lastMessageSent.content
-                    : "No messages yet"}
+                    : ""}
                 </span>
               </div>
             </ConversationSidebarItem>
