@@ -29,7 +29,7 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: PayloadAction<MessageEventPayload>) => {
-      const { conversation, ...message } = action.payload;
+      const { conversation, message } = action.payload;
       const conversationMessage = state.messages.find(
         (cm) => cm.id === conversation.id
       );

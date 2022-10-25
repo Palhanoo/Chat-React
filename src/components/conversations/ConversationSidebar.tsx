@@ -62,7 +62,9 @@ export const ConversationSidebar: FC<Props> = () => {
                     ${getDisplayUser(conversation).lastName}`}
                 </span>
                 <span className={styles.conversationLastMessage}>
-                  Sample Text
+                  {conversation.lastMessageSent
+                    ? conversation.lastMessageSent.content
+                    : "No messages yet"}
                 </span>
               </div>
             </ConversationSidebarItem>
