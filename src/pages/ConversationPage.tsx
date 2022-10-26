@@ -5,6 +5,7 @@ import { ConversationPanel } from "../components/conversations/ConversationPanel
 import { ConversationSidebar } from "../components/conversations/ConversationSidebar";
 import { AppDispatch, RootState } from "../store";
 import {
+  addConversation,
   fetchConversationsThunk,
   updateLastMessage,
 } from "../store/conversationSlice";
@@ -40,9 +41,14 @@ export const ConversationPage = () => {
       dispatch(addMessage(payload));
       dispatch(updateLastMessage(conversation));
     });
+    socket.on("onConversation", (payload: ConversationType) => {
+      console.log(payload);
+      dispatch(addConversation(payload));
+    });
     return () => {
       socket.off("connected");
       socket.off("onMessage");
+      socket.off("onConversation");
     };
   }, [id]);
 
