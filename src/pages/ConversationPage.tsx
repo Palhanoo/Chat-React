@@ -1,14 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
 import { ConversationPanel } from "../components/conversations/ConversationPanel";
 import { ConversationSidebar } from "../components/conversations/ConversationSidebar";
 import { AppDispatch, RootState } from "../store";
-import { fetchConversationsThunk } from "../store/conversationSlice";
+import {
+  fetchConversationsThunk,
+  updateLastMessage,
+} from "../store/conversationSlice";
+import { addMessage } from "../store/messageSlice";
+import { SocketContext } from "../utils/context/SocketContext";
 import { Page } from "../utils/styles";
-import { ConversationType } from "../utils/types";
+import { ConversationType, MessageEventPayload } from "../utils/types";
 
 export const ConversationPage = () => {
+  const socket = useContext(SocketContext);
+
   const { id } = useParams();
   const [conversations, setConversations] = useState<ConversationType[]>([]);
 
@@ -22,6 +29,22 @@ export const ConversationPage = () => {
     // console.log(conversationsState.find((c) => c.id === 9));
     dispatch(fetchConversationsThunk());
   }, []);
+
+  useEffect(() => {
+    socket.emit("onClientConnect", {
+      conversationId: parseInt(id!),
+    });
+    socket.on("connected", () => console.log("connected"));
+    socket.on("onMessage", (payload: MessageEventPayload) => {
+      const { conversation, ...message } = payload;
+      dispatch(addMessage(payload));
+      dispatch(updateLastMessage(conversation));
+    });
+    return () => {
+      socket.off("connected");
+      socket.off("onMessage");
+    };
+  }, [id]);
 
   return (
     <Page>

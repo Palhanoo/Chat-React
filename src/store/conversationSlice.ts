@@ -8,13 +8,11 @@ import { RootState } from ".";
 import { getConversations, postNewConversation } from "../utils/api";
 import { ConversationType, CreateConversationParams } from "../utils/types";
 
-// Define a type for the slice state
 interface ConversationsState {
   conversations: ConversationType[];
   loading: boolean;
 }
 
-// Define the initial state using that type
 const initialState: ConversationsState = {
   conversations: [],
   loading: false,

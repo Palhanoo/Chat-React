@@ -7,10 +7,7 @@ import {
 } from "../../utils/styles";
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
-import {
-  addConversation,
-  createConversationThunk,
-} from "../../store/conversationSlice";
+import { createConversationThunk } from "../../store/conversationSlice";
 import { useForm } from "react-hook-form";
 import { CreateConversationParams } from "../../utils/types";
 import { AppDispatch } from "../../store";
@@ -39,7 +36,7 @@ export const CreateConversationForm: FC<Props> = ({ setShowModal }) => {
         setShowModal(false);
         navigate(`/conversations/${data.id}`);
       })
-      .catch(() => console.log("ok"));
+      .catch(() => console.log("error"));
   };
 
   return (
