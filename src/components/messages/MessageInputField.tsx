@@ -29,7 +29,7 @@ export const MessageInputField: FC<Props> = ({
           />
         </form>
       </MessageInputContainer>
-      <div>is typing</div>
+      {/* <div>is typing</div> */}
     </>
   );
 };
