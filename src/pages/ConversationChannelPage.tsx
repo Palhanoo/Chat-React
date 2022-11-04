@@ -3,12 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { MessagePanel } from "../components/messages/MessagePanel";
 import { AppDispatch, RootState } from "../store";
-import { updateLastMessage } from "../store/conversationSlice";
-import { addMessage, fetchMessagesThunk } from "../store/messageSlice";
+import { editMessage, fetchMessagesThunk } from "../store/messageSlice";
 import { AuthContext } from "../utils/context/AuthContext";
 import { SocketContext } from "../utils/context/SocketContext";
 import { ConversationChannelPageStyle } from "../utils/styles";
-import { MessageEventPayload, MessageType } from "../utils/types";
 
 export const ConversationChannelPage = () => {
   const socket = useContext(SocketContext);
@@ -44,6 +42,10 @@ export const ConversationChannelPage = () => {
       setIsRecipientTyping(true);
     });
 
+    socket.on("onMessageUpdate", (message) => {
+      dispatch(editMessage(message));
+    });
+
     socket.on("onTypingStop", () => {
       // console.log("onTypingStop: User has stopped typing...");
       setIsRecipientTyping(false);
@@ -55,6 +57,7 @@ export const ConversationChannelPage = () => {
       socket.off("userLeave");
       socket.off("onTypingStart");
       socket.off("onTypingStop");
+      socket.off("onMessageUpdate");
     };
   }, [id]);
 
