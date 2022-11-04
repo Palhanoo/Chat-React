@@ -202,11 +202,10 @@ export const MessagePanelStyle = styled.div`
 `;
 
 export const MessagePanelBody = styled.div`
-  padding: 32px;
+  padding: 32px 32px 10px 32px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 32px;
   padding-top: 0px;
   height: 100%;
 `;
@@ -307,4 +306,13 @@ export const ContextMenuStyle = styled.div<ContextMenuProps>`
     cursor: pointer;
     background-color: #1f1f1f;
   }
+`;
+
+export const MessageTypingStatus = styled.div`
+  width: 100%;
+  font-size: 15px;
+  color: #adadad;
+  box-sizing: border-box;
+  margin-top: 10px;
+  height: 20px;
 `;

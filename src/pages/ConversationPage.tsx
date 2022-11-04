@@ -32,10 +32,6 @@ export const ConversationPage = () => {
   }, []);
 
   useEffect(() => {
-    socket.emit("onClientConnect", {
-      conversationId: parseInt(id!),
-    });
-    socket.on("connected", () => console.log("connected"));
     socket.on("onMessage", (payload: MessageEventPayload) => {
       const { conversation, ...message } = payload;
       dispatch(addMessage(payload));
