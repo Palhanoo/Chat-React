@@ -100,6 +100,16 @@ export const messagesSlice = createSlice({
           (m) => m.id === data.messageId
         );
         conversationMessages?.messages.splice(messageIndex, 1);
+      })
+      .addCase(editMessageThunk.fulfilled, (state, action) => {
+        const { data: message } = action.payload;
+        const { id } = message.conversation;
+        const connversationMessage = state.messages.find((cm) => cm.id === id);
+        if (!connversationMessage) return;
+        const messageIndex = connversationMessage.messages.findIndex(
+          (m) => m.id === message.id
+        );
+        connversationMessage.messages[messageIndex] = message;
       });
   },
 });

@@ -97,6 +97,7 @@ export const MessageContainer = () => {
             isEditing={isEditing}
             selectedEditMessage={selectedEditMessage}
             onEditMessageChange={onEditMessageChange}
+            setIsEditing={setIsEditing}
           />
         );
       }
@@ -109,6 +110,7 @@ export const MessageContainer = () => {
             {isEditing && m.id === selectedEditMessage?.id ? (
               <MessageItemContent padding="0 0 0 70px">
                 <EditMessageContainer
+                  setIsEditing={setIsEditing}
                   selectedEditMessage={selectedEditMessage}
                   onEditMessageChange={onEditMessageChange}
                 />
@@ -130,6 +132,7 @@ export const MessageContainer = () => {
             isEditing={isEditing}
             selectedEditMessage={selectedEditMessage}
             onEditMessageChange={onEditMessageChange}
+            setIsEditing={setIsEditing}
           />
         );
       }

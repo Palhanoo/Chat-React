@@ -1,5 +1,5 @@
 import { formatRelative } from "date-fns";
-import { Dispatch, FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import {
   MessageItemContainer,
   MessageItemAvatar,
@@ -16,6 +16,7 @@ type FormattedMessageProps = {
   message: MessageType;
   key: number;
   onContextMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
   selectedEditMessage: MessageType | null;
   isEditing: boolean;
   onEditMessageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -28,6 +29,7 @@ export const FormattedMessage: FC<FormattedMessageProps> = ({
   isEditing,
   selectedEditMessage,
   onEditMessageChange,
+  setIsEditing,
 }) => {
   return (
     <MessageItemContainer onContextMenu={onContextMenu}>
@@ -52,6 +54,7 @@ export const FormattedMessage: FC<FormattedMessageProps> = ({
         {isEditing && message.id === selectedEditMessage?.id ? (
           <MessageItemContent padding="8px 0 0 0">
             <EditMessageContainer
+              setIsEditing={setIsEditing}
               selectedEditMessage={selectedEditMessage}
               onEditMessageChange={onEditMessageChange}
             />
