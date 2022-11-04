@@ -70,3 +70,9 @@ export type DeleteMessageResponse = {
 export type MessagePanelBodyProps = {
   isTyping: boolean;
 };
+
+export type EditMessagePayload = {
+  conversationId: number;
+  messageId: number;
+  content: string;
+};
