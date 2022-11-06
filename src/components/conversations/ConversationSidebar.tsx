@@ -3,42 +3,38 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   ConversationSidebarContainer,
   ConversationSidebarHeader,
-  ConversationSidebarItem,
-  ConversationSideBarStyle,
+  ConversationSidebarStyle,
 } from "../../utils/styles";
 import { TbEdit } from "react-icons/tb";
-import { ConversationType } from "../../utils/types";
+import { Conversation } from "../../utils/types";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { CreateConversationModal } from "../../modals/CreateConversationModal";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { RootState } from "../../store";
+import { ConversationSelected } from "./ConversationSelected";
+import { GroupSidebarItem } from "../groups/GroupSidebarItem";
+import { ConversationSidebarItem } from "./ConvnersationSidebarItem";
 
-type Props = {
-  conversations: ConversationType[];
-};
-
-export const ConversationSidebar: FC<Props> = () => {
+export const ConversationSidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { user } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
-
+  const groups = useSelector((state: RootState) => state.groups.groups);
   const conversations = useSelector(
     (state: RootState) => state.conversation.conversations
   );
 
-  const getDisplayUser = (conversation: ConversationType) => {
-    const userId = user?.id;
-    return conversation.creator.id === userId
-      ? conversation.recipient
-      : conversation.creator;
-  };
+  const selectedConversationType = useSelector(
+    (state: RootState) => state.selectedConversationType.type
+  );
+
   return (
     <>
       {showModal && <CreateConversationModal setShowModal={setShowModal} />}
-      <ConversationSideBarStyle>
+      <ConversationSidebarStyle>
         <ConversationSidebarHeader>
           <h1>Conversations</h1>
           <div
@@ -49,28 +45,23 @@ export const ConversationSidebar: FC<Props> = () => {
             <TbEdit size={40} />
           </div>
         </ConversationSidebarHeader>
+        <ConversationSelected />
         <ConversationSidebarContainer>
-          {conversations.map((conversation) => (
-            <ConversationSidebarItem
-              key={conversation.id}
-              onClick={() => navigate(`/conversations/${conversation.id}`)}
-            >
-              <div className={styles.conversationAvatar}></div>
-              <div>
-                <span className={styles.conversationName}>
-                  {`${getDisplayUser(conversation).firstName} 
-                    ${getDisplayUser(conversation).lastName}`}
-                </span>
-                <span className={styles.conversationLastMessage}>
-                  {conversation.lastMessageSent
-                    ? conversation.lastMessageSent.content
-                    : ""}
-                </span>
-              </div>
-            </ConversationSidebarItem>
-          ))}
+          <ConversationSelected />
+          <section>
+            {selectedConversationType === "private"
+              ? conversations.map((conversation) => (
+                  <ConversationSidebarItem
+                    key={conversation.id}
+                    conversation={conversation}
+                  />
+                ))
+              : groups.map((group) => (
+                  <GroupSidebarItem key={group.id} group={group} />
+                ))}
+          </section>
         </ConversationSidebarContainer>
-      </ConversationSideBarStyle>
+      </ConversationSidebarStyle>
     </>
   );
 };

@@ -6,10 +6,10 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from ".";
 import { getConversations, postNewConversation } from "../utils/api";
-import { ConversationType, CreateConversationParams } from "../utils/types";
+import { Conversation, CreateConversationParams } from "../utils/types";
 
 interface ConversationsState {
-  conversations: ConversationType[];
+  conversations: Conversation[];
   loading: boolean;
 }
 
@@ -36,11 +36,11 @@ export const conversationsSlice = createSlice({
   name: "conversations",
   initialState,
   reducers: {
-    addConversation: (state, action: PayloadAction<ConversationType>) => {
+    addConversation: (state, action: PayloadAction<Conversation>) => {
       console.log("addConversation");
       state.conversations.unshift(action.payload);
     },
-    updateLastMessage: (state, action: PayloadAction<ConversationType>) => {
+    updateLastMessage: (state, action: PayloadAction<Conversation>) => {
       const conversation = action.payload;
       const index = state.conversations.findIndex(
         (c) => c.id === conversation.id

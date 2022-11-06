@@ -34,7 +34,10 @@ export const EditMessageContainer: FC<Props> = ({
     };
     dispatch(editMessageThunk(params))
       .then(() => setIsEditing(false))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsEditing(false);
+      });
   };
 
   return (
